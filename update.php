@@ -1,16 +1,26 @@
 <?php
 include 'connect.php'; // connect.php has $conn not $con
-
+$id=$_GET['updateid'];
+$sql="Select * from `crud` where id=$id";
+$result=mysqli_query($conn,$sql);
+$row=mysqli_fetch_assoc($result);
+$name=$row['name'];
+$email=$row['email'];
+$mobile=$row['mobile'];
+$password=$row['password'];
 if(isset($_POST['submit'])){
     $name = $_POST['name'];
     $email = $_POST['email'];
     $mobile = $_POST['mobile'];
     $password = $_POST['password'];
+ 
 
-    $sql = "INSERT INTO `crud` (name, email, mobile, password) VALUES ('$name', '$email', '$mobile', '$password')";
+    $sql="update `crud` set id=$id, name='$name', email='$email', mobile='$mobile', password='$password' where id=$id";
+    
     $result = mysqli_query($conn, $sql); // Use $conn here
     if($result){
-        echo "Data inserted successfully";
+        // echo "Updated successfully";
+        header('location:display.php'); // Redirect to display.php after update
     } else {
         die(mysqli_error($conn));
     }
@@ -29,28 +39,30 @@ if(isset($_POST['submit'])){
   <body>
     
     <div class="container my-5">
-    <form method ="POST" action="user.php">
+    <form method ="POST" action="">
+
   <div class="form-group mb-3">
     <label >name</label>
-    <input type="text" class="form-control" placeholder="Enter your name" name="name" autocomplete="off" required>
+    <input type="text" class="form-control" placeholder="Enter your name" name="name" autocomplete="off" value=<?php echo $name;?> required>
   </div>
   <div class="form-group mb-3">
     <label >Email</label>
-    <input type="email" class="form-control" placeholder="Enter your email" name="email" autocomplete="off" required>
+    <input type="email" class="form-control" placeholder="Enter your email" name="email" autocomplete="off"  value=<?php echo $email;?> required>
   </div>
   <div class="form-group mb-3">
     <label >mobile</label>
-    <input type="text" class="form-control" placeholder="Enter your mobile" name="mobile" autocomplete="off" required>
+    <input type="text" class="form-control" placeholder="Enter your mobile" name="mobile" autocomplete="off" value=<?php echo $mobile;?> required>
   </div>
   <div class="form-group mb-3">
     <label >password</label>
-    <input type="text" class="form-control" placeholder="Enter your pssword" name="password" autocomplete="off" required>
+    <input type="text" class="form-control" placeholder="Enter your pssword" name="password" autocomplete="off" value=<?php echo $password;?> required>
   </div>
+   
   
   
   
-  
-  <button type="submit" class="btn btn-primary" name="submit">Submit</button>
+  <button type="submit" class="btn btn-primary" name="submit">Update</button>
+
 </form>
 
 

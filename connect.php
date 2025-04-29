@@ -1,12 +1,14 @@
 <?php
+$host = "localhost";
+$user = "root";
+$password = "";
+$database = "crud";
+$port = 3307;
 
-$con =new mysqli('localhost','root','','CRUD');
+$conn = new mysqli($host, $user, $password, $database, $port);
 
-if($con->connect_error){
-    die("Connection failed: ".$con->connect_error);
-}
-else{
-    echo "Connected successfully";
-}
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} //
 
 ?>
